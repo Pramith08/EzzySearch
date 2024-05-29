@@ -46,7 +46,6 @@ To run this application, please make sure you have Python installed. Follow the 
 
 - Streamlit
 - Selenium
-- Other dependencies as listed in `requirements.txt`
 
 ## Acknowledgements
 
