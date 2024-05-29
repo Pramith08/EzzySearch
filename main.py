@@ -96,7 +96,7 @@ st.sidebar.button("Home")
 st.write(""" # EZZY SEARCH""")
 input_text = st.text_input(" ", "")
 if st.button("Submit"):
-    path = "C:\\Program Files (x86)\\chromedriver.exe"
+    path = "chromedriver.exe"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--start-fullscreen")
     driver = webdriver.Chrome(path, options=chrome_options)
