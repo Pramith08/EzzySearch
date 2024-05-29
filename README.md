@@ -9,6 +9,15 @@ This project is a Python application designed to assist new GitHub users and pro
 - Displays the top 10 repositories for a given topic.
 - Shows repository names, links, and README descriptions.
 
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.x
+- Chrome WebDriver (or any other compatible WebDriver)
+
 ## Installation
 
 To run this application, please make sure you have Python installed. Follow the steps below to set up the necessary environment and dependencies:
@@ -23,6 +32,7 @@ To run this application, please make sure you have Python installed. Follow the 
     ```bash
     pip install -r requirements.txt
     ```
+3. Change the location of the chrome driver.
 
 ## Usage
 
