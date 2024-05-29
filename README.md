@@ -1,4 +1,4 @@
-# GitHub Repository Search App
+# Ezzy Search
 
 This project is a Python application designed to assist new engineers and programmers in discovering and using GitHub. It uses Streamlit for the front end and Selenium for web scraping to search GitHub repositories based on user input. The application fetches and displays the top 10 repositories related to the input topic, showing their names, links, and descriptions.
 
