@@ -1,6 +1,6 @@
-# Ezzy Search
+# Ezzy Search - Github Repository Search Application
 
-This project is a Python application designed to assist new engineers and programmers in discovering and using GitHub. It uses Streamlit for the front end and Selenium for web scraping to search GitHub repositories based on user input. The application fetches and displays the top 10 repositories related to the input topic, showing their names, links, and descriptions.
+This project is a Python application designed to assist new GitHub users and programmers in discovering and using GitHub. It uses Streamlit for the front end and Selenium for web scraping to search GitHub repositories based on user input. The application fetches and displays the top 10 repositories related to the input topic, showing their names, links, and descriptions.
 
 ## Features
 
@@ -11,7 +11,7 @@ This project is a Python application designed to assist new engineers and progra
 
 ## Installation
 
-To run this application, ensure you have Python installed. Follow the steps below to set up the necessary environment and dependencies:
+To run this application, please make sure you have Python installed. Follow the steps below to set up the necessary environment and dependencies:
 
 1. Clone the repository:
     ```bash
@@ -26,12 +26,12 @@ To run this application, ensure you have Python installed. Follow the steps belo
 
 ## Usage
 
-1. Start the Streamlit application in terminal:
+1. Start the Streamlit application in the terminal:
     ```bash
     streamlit run main.py
     ```
 
-2. Open your web browser and go to localhost displayed in terminal
+2. Open your web browser and go to localhost displayed in the terminal
 
 3. Enter the topic you want to search for in the input box and click the "Submit" button.
 
