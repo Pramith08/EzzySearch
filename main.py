@@ -104,7 +104,8 @@ if st.button("Submit"):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     
-    driver = webdriver.Chrome(ChromeDriverManager(version="114.0.5735.90").install(), options=chrome_options)
+    # Specify the Chrome driver version explicitly
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.get("https://github.com")
     print(driver.title)
 
