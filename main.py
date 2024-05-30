@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
-def get_no_of_results():
+def get_no_of_results(driver):
     while True:
         try:
             no_of_result = driver.find_element(By.XPATH, "/html/body/div[1]/div[4]/main/react-app/div/div/div[1]/div/div/div[2]/div[2]/div/div[1]/div[1]/div/span/span/div")
@@ -16,7 +16,7 @@ def get_no_of_results():
         except StaleElementReferenceException:
             time.sleep(2)
 
-def find_element_retry(by, value):
+def find_element_retry(driver, by, value):
     retries = 3
     for i in range(retries):
         try:
@@ -26,11 +26,11 @@ def find_element_retry(by, value):
             time.sleep(2)
     raise NoSuchElementException(f"Element not found after {retries} retries: {by}={value}")
 
-def load_first_10_repo():
+def load_first_10_repo(driver):
     for a in range(1, 11):
         try:
             # Find repo
-            find_repository = find_element_retry(By.XPATH, f"/html/body/div[1]/div[4]/main/react-app/div/div/div[1]/div/div/div[2]/div[2]/div/div[1]/div[4]/div/div/div[{a}]/div/div[1]/h3/div/div[2]/a")
+            find_repository = find_element_retry(driver, By.XPATH, f"/html/body/div[1]/div[4]/main/react-app/div/div/div[1]/div/div/div[2]/div[2]/div/div[1]/div[4]/div/div/div[{a}]/div/div[1]/h3/div/div[2]/a")
 
             # Write repo name
             st.subheader(find_repository.text)
@@ -49,7 +49,7 @@ def load_first_10_repo():
             found_readme = False
             for variation in readme_variations:
                 try:
-                    find_readme = find_element_retry(By.PARTIAL_LINK_TEXT, variation)
+                    find_readme = find_element_retry(driver, By.PARTIAL_LINK_TEXT, variation)
                     found_readme = True
                     break
                 except NoSuchElementException:
@@ -62,7 +62,7 @@ def load_first_10_repo():
                 time.sleep(2)
 
                 # Find article in readme
-                find_readme_text = find_element_retry(By.TAG_NAME, "article")
+                find_readme_text = find_element_retry(driver, By.TAG_NAME, "article")
                 time.sleep(2)
 
                 # Convert article content into text
@@ -99,11 +99,12 @@ input_text = st.text_input(" ", "")
 if st.button("Submit"):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--start-fullscreen")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-    # path = "https://github.com/Pramith08/EzzySearch/blob/main/chromedriver.exe"
-    # chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument("--start-fullscreen")
-    driver = webdriver.Chrome(path, options=chrome_options)
     driver.get("https://github.com")
     print(driver.title)
 
@@ -123,10 +124,10 @@ if st.button("Submit"):
     time.sleep(2)
 
     # Get number of results
-    results = get_no_of_results()
+    results = get_no_of_results(driver)
 
     # Load first 10 repos
-    load_first_10_repo()
+    load_first_10_repo(driver)
 
     # Load next 10 repos
     if int(results) > 10:
