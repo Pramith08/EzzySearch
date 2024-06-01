@@ -45,7 +45,7 @@ def load_first_10_repo(driver):
             time.sleep(2)
 
             # Check if readme found (various cases)
-            readme_variations = ["readme", "Readme", "README", "ReadMe", "ReadME"]
+            readme_variations = ["readme.md", "Readme.md", "README.md", "ReadMe.md", "ReadME.md"]
             found_readme = False
             for variation in readme_variations:
                 try:
@@ -54,37 +54,41 @@ def load_first_10_repo(driver):
                     break
                 except NoSuchElementException:
                     continue
+            try:
+                if found_readme:
+                    time.sleep(2)
+                    find_readme.click()
+                    print("-----   " + str(a) + " :" + " readme")
+                    time.sleep(2)
 
-            if found_readme:
-                time.sleep(2)
-                find_readme.click()
-                print("-----   " + str(a) + " :" + " readme")
-                time.sleep(2)
+                    # Find article in readme
+                    find_readme_text = find_element_retry(driver, By.TAG_NAME, "article")
+                    time.sleep(2)
 
-                # Find article in readme
-                find_readme_text = find_element_retry(driver, By.TAG_NAME, "article")
-                time.sleep(2)
+                    # Convert article content into text
+                    readme_text = find_readme_text.text
 
-                # Convert article content into text
-                readme_text = find_readme_text.text
+                    readme_text_length = len(readme_text)
 
-                readme_text_length = len(readme_text)
+                    if readme_text_length > 500:
+                        readme_text = (readme_text[:500] + "...")
+                        st.write(readme_text)
+                    else:
+                        st.write(readme_text)
 
-                if readme_text_length > 500:
-                    readme_text = (readme_text[:500] + "...")
-                    st.write(readme_text)
+                    # Wait and go back
+                    driver.back()
+                    driver.back()
                 else:
-                    st.write(readme_text)
+                    st.write("No readme file found")
 
                 # Wait and go back
-                driver.back()
-                driver.back()
+                    driver.back()
+            except:
+                continue
+        
 
-            else:
-                st.write("No readme file found")
-
-                # Wait and go back
-                driver.back()
+            
 
             time.sleep(2)
 
@@ -99,13 +103,11 @@ input_text = st.text_input(" ", "")
 if st.button("Submit"):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--start-fullscreen")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
+    
     
     # Specify the Chrome driver version explicitly
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    path = "C:\Program Files (x86)\chromedriver"
+    driver = webdriver.Chrome(ChromeDriverManager.install(), options=chrome_options)
     driver.get("https://github.com")
     print(driver.title)
 
@@ -126,6 +128,7 @@ if st.button("Submit"):
 
     # Get number of results
     results = get_no_of_results(driver)
+    st.write(str(results)+" results found")
 
     # Load first 10 repos
     load_first_10_repo(driver)
