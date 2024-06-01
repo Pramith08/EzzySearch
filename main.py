@@ -1,4 +1,5 @@
 import os
+import subprocess
 import time
 import streamlit as st
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
@@ -7,20 +8,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Install Chrome
 def install_chrome():
-    os.system('wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb')
-    os.system('sudo apt update')
-    os.system('sudo apt install ./google-chrome-stable_current_amd64.deb')
+    subprocess.run('wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb', shell=True)
+    subprocess.run('apt-get update', shell=True)
+    subprocess.run('apt-get install -y ./google-chrome-stable_current_amd64.deb', shell=True)
 
-# Install ChromeDriver
 def install_chromedriver():
-    os.system('wget -N https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip')
-    os.system('unzip chromedriver_linux64.zip')
-    os.system('chmod +x chromedriver')
-    os.system('mv -f chromedriver /usr/local/share/chromedriver')
-    os.system('mv -f chromedriver /usr/local/bin/chromedriver')
-    os.system('mv -f chromedriver /usr/bin/chromedriver')
+    subprocess.run('wget -N https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip', shell=True)
+    subprocess.run('unzip chromedriver_linux64.zip', shell=True)
+    subprocess.run('chmod +x chromedriver', shell=True)
+    subprocess.run('mv -f chromedriver /usr/local/share/chromedriver', shell=True)
+    subprocess.run('mv -f chromedriver /usr/local/bin/chromedriver', shell=True)
+    subprocess.run('mv -f chromedriver /usr/bin/chromedriver', shell=True)
 
 # Call the installation functions
 install_chrome()
@@ -119,12 +118,10 @@ st.write(""" # EZZY SEARCH""")
 input_text = st.text_input(" ", "")
 if st.button("Submit"):
     chrome_options = webdriver.ChromeOptions()
-    
-    chrome_options.add_argument("--start-fullscreen")
     # chrome_options.add_argument("--headless")  # Commenting out headless mode
-    #chrome_options.add_argument("--disable-gpu")  # Disable GPU usage
-    #chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
-    #chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+    chrome_options.add_argument("--disable-gpu")  # Disable GPU usage
+    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.get("https://github.com")
@@ -147,7 +144,7 @@ if st.button("Submit"):
 
     # Get number of results
     results = get_no_of_results(driver)
-    st.write(str(results)+" results found")
+    st.write(str(results) + " results found")
 
     # Load first 10 repos
     load_first_10_repo(driver)

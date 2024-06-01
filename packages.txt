@@ -1,4 +1,5 @@
-wget
-unzip
 libgconf-2-4
-google-chrome-stable
+libnss3
+libasound2
+libxshmfence1
+xdg-utils
