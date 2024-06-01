@@ -1,5 +1,1 @@
-libgconf-2-4
-libnss3
-libasound2
-libxshmfence1
-xdg-utils
+google-chrome-stable
