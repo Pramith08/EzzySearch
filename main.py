@@ -107,7 +107,7 @@ if st.button("Submit"):
     
     # Specify the Chrome driver version explicitly
     path = "C:\Program Files (x86)\chromedriver"
-    driver = webdriver.Chrome(ChromeDriverManager.install(), options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.get("https://github.com")
     print(driver.title)
 
