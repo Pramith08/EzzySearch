@@ -1,5 +1,4 @@
 streamlit
-chrome
-selenium
 chromedriver
+selenium
 webdriver-manager
