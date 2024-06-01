@@ -1,0 +1,4 @@
+wget
+unzip
+libgconf-2-4
+google-chrome-stable

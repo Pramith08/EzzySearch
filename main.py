@@ -1,11 +1,32 @@
+import os
 import time
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 import streamlit as st
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+# Install Chrome
+def install_chrome():
+    os.system('wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb')
+    os.system('sudo apt update')
+    os.system('sudo apt install ./google-chrome-stable_current_amd64.deb')
+
+# Install ChromeDriver
+def install_chromedriver():
+    os.system('wget -N https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip')
+    os.system('unzip chromedriver_linux64.zip')
+    os.system('chmod +x chromedriver')
+    os.system('mv -f chromedriver /usr/local/share/chromedriver')
+    os.system('mv -f chromedriver /usr/local/bin/chromedriver')
+    os.system('mv -f chromedriver /usr/bin/chromedriver')
+
+# Call the installation functions
+install_chrome()
+install_chromedriver()
+
+# Define your functions
 def get_no_of_results(driver):
     while True:
         try:
@@ -22,7 +43,7 @@ def find_element_retry(driver, by, value):
         try:
             element = driver.find_element(by, value)
             return element
-        except StaleElementReferenceException:
+        except (StaleElementReferenceException, NoSuchElementException):
             time.sleep(2)
     raise NoSuchElementException(f"Element not found after {retries} retries: {by}={value}")
 
@@ -86,27 +107,25 @@ def load_first_10_repo(driver):
                     driver.back()
             except:
                 continue
-        
-
-            
 
             time.sleep(2)
 
         except NoSuchElementException:
             pass
 
-#--------------------------------------
-#main
+# Main code
 st.sidebar.button("Home")
 st.write(""" # EZZY SEARCH""")
 input_text = st.text_input(" ", "")
 if st.button("Submit"):
     chrome_options = webdriver.ChromeOptions()
+    
     chrome_options.add_argument("--start-fullscreen")
-    
-    
-    # Specify the Chrome driver version explicitly
-    path = "C:\Program Files (x86)\chromedriver"
+    # chrome_options.add_argument("--headless")  # Commenting out headless mode
+    #chrome_options.add_argument("--disable-gpu")  # Disable GPU usage
+    #chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+    #chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.get("https://github.com")
     print(driver.title)
