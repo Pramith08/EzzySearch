@@ -137,7 +137,7 @@ if 'chat_history' not in st.session_state:
 # Update chat history
 if user_input:
     st.session_state['chat_history'].append({"role": "user", "message": user_input})
-    st.session_state['chat_history'].append({"role": "assistant", "message": "Ezzy Bot: Processing your request, please wait"})
+    st.session_state['chat_history'].append({"role": "assistant", "message": "Ezzy Bot: Processing your request, please wait..."})
 
     # Display chat history
     with messages:
@@ -184,6 +184,18 @@ if user_input:
 
             # Get number of results
             results = get_no_of_results(driver)
+            time.sleep(1)
+            if int(results)>9:
+
+                st.session_state['chat_history'].append({"role": "assistant", "message": "Ezzy Bot: fetching first 10 repos..."})
+
+                # Display chat history
+                with messages:
+                    for entry in st.session_state['chat_history']:
+                        role = entry["role"]
+                        message = entry["message"]
+                        with st.chat_message(role):
+                            st.write(message)
 
             # Load first 10 repos
             final_readme = load_first_10_repo(driver)
