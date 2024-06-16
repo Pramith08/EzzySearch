@@ -7,9 +7,34 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.service import Service as FirefoxService
+import os
+
 # from webdriver_manager.chrome import ChromeDriverManager
 
+
 ### functions ###
+
+# Function to install Geckodriver and configure Selenium to use Firefox
+@st.experimental_singleton
+def setup_selenium():
+    # Install Geckodriver
+    os.system('sbase install geckodriver')
+    
+    # Set up the path to Geckodriver
+    gecko_driver_path = '/home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver'
+    
+    # Configure Firefox options
+    firefox_options = FirefoxOptions()
+    firefox_options.add_argument("--headless")
+    
+    # Create a Service object for Firefox
+    firefox_service = FirefoxService(executable_path=gecko_driver_path)
+    
+    # Return the configured WebDriver
+    return webdriver.Firefox(service=firefox_service, options=firefox_options)
+
+
+
 def get_no_of_results(driver):
     while True:
         try:
@@ -105,6 +130,9 @@ def load_first_10_repo(driver):
     return final_readme
 
 #### main ###
+
+browser = setup_selenium()
+
 st.set_page_config(
     page_title="Ezzy Search",
     page_icon=":🔍:",
