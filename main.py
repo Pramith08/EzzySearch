@@ -4,7 +4,9 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from webdriver_manager.firefox import GeckoDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 
 ### functions ###
 def get_no_of_results(driver):
@@ -150,9 +152,17 @@ if user_input:
     # Process the request in a spinner
     try:
         with st.spinner('Processing your request...'):
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.add_argument("--start-fullscreen")
-            driver = webdriver.Chrome(ChromeDriverManager(name="chromedriver").install(), options=chrome_options)
+
+                        # Setup Firefox options
+            firefox_options = FirefoxOptions()
+            firefox_options.add_argument("--headless")  # Optional: Run headlessly
+
+
+            # chrome_options = webdriver.ChromeOptions()
+            # chrome_options.add_argument("--start-fullscreen")
+
+            driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=firefox_options)
+            # driver = webdriver.Chrome(ChromeDriverManager(name="chromedriver").install(), options=chrome_options)
             driver.get("https://github.com")
             print(driver.title)
 
