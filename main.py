@@ -9,9 +9,9 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.service import Service as FirefoxService
 # from webdriver_manager.chrome import ChromeDriverManager
 
+
+
 ### functions ###
-
-
 
 def get_no_of_results(driver):
     while True:
@@ -174,15 +174,9 @@ if user_input:
             # Initialize the Firefox driver with the Service object and options
             driver = webdriver.Firefox(service=firefox_service, options=firefox_options)
 
-
-            
-
+            # driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=firefox_options)
             # chrome_options = webdriver.ChromeOptions()
             # chrome_options.add_argument("--start-fullscreen")
-
-           
-
-            # driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=firefox_options)
             # driver = webdriver.Chrome(ChromeDriverManager(name="chromedriver").install(), options=chrome_options)
             driver.get("https://github.com")
             print(driver.title)
