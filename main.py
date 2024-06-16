@@ -154,13 +154,13 @@ if user_input:
     try:
         with st.spinner('Processing your request...'):
 
-                        # Setup Firefox options
+            # Setup Firefox options
             firefox_options = FirefoxOptions()
             firefox_options.add_argument("--headless")  # Optional: Run headlessly
 
-
-            # chrome_options = webdriver.ChromeOptions()
-            # chrome_options.add_argument("--start-fullscreen")
+            # Explicitly set the path to the Firefox binary
+            firefox_binary_path = "/usr/bin/firefox"  # Adjust this path according to your system
+            firefox_options.binary_location = firefox_binary_path
 
             # Use GeckoDriverManager to get the path to the geckodriver executable
             gecko_driver_path = GeckoDriverManager().install()
@@ -168,8 +168,16 @@ if user_input:
             # Create a Service object for Firefox
             firefox_service = FirefoxService(executable_path=gecko_driver_path)
 
-            # Initialize the Firefox driver with the Service object
+            # Initialize the Firefox driver with the Service object and options
             driver = webdriver.Firefox(service=firefox_service, options=firefox_options)
+
+
+            
+
+            # chrome_options = webdriver.ChromeOptions()
+            # chrome_options.add_argument("--start-fullscreen")
+
+           
 
             # driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=firefox_options)
             # driver = webdriver.Chrome(ChromeDriverManager(name="chromedriver").install(), options=chrome_options)
