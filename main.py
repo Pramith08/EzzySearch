@@ -162,7 +162,7 @@ if user_input:
             firefox_options.add_argument("--headless")  # Optional: Run headlessly
 
             # Explicitly set the path to the Firefox binary
-            firefox_binary_path = "/usr/bin/firefox"  # Adjust this path according to your system
+            firefox_binary_path = "/usr/lib/firefox"  # Adjust this path according to your system
             firefox_options.binary_location = firefox_binary_path
 
             # Use GeckoDriverManager to get the path to the geckodriver executable
