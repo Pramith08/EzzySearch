@@ -1,0 +1,2 @@
+"""EzzySearch application package."""
+

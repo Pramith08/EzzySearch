@@ -1,69 +1,62 @@
-# Ezzy Search - Github Repository Search Application
+# EzzySearch
 
-This project is a Python application designed to assist new GitHub users and programmers in discovering and using GitHub. It uses Streamlit for the front end and Selenium for web scraping to search GitHub repositories based on user input. The application fetches and displays the top 10 repositories related to the input topic, showing their names, links, and descriptions.
+EzzySearch is a Streamlit app for discovering and comparing GitHub repositories. It uses the GitHub REST API instead of browser scraping, then scores each repository for beginner friendliness using metadata and README signals.
+
+EzzySearch is not affiliated with GitHub.
 
 ## Features
 
-- User-friendly front-end interface built with Streamlit.
-- Automated backend search on GitHub using Selenium.
-- Displays the top 10 repositories for a given topic.
-- Shows repository names, links, and README descriptions.
+- Search public GitHub repositories by topic or keyword.
+- Open an exact repository by entering `owner/repo` or a GitHub repository URL.
+- Filter by language, stars, recency, and archived status.
+- Sort by best match, stars, forks, or recent updates.
+- Analyze a repository's README and metadata.
+- Score beginner friendliness, documentation quality, maintenance, setup clarity, and risk.
+- Shortlist repositories and export the shortlist as Markdown.
+- Compare 2-4 shortlisted repositories.
 
----
+## Project Structure
 
-## Getting Started
+```text
+main.py                    Streamlit dashboard entrypoint
+assets/                    Logo and static assets
+ezzysearch/config.py       App configuration
+ezzysearch/github_client.py GitHub REST API client
+ezzysearch/models.py       Shared data models
+ezzysearch/repo_analyzer.py Rule-based beginner-friendliness analyzer
+tests/                     Unit tests with mocked API responses
+```
 
-### Prerequisites
+## Setup
 
-- Python 3.x
-- Chrome WebDriver (or any other compatible WebDriver)
+```bash
+git clone https://github.com/Pramith08/EzzySearch.git
+cd EzzySearch
+python -m pip install -r requirements.txt
+```
 
-## Installation
+Optional: set a GitHub token to get higher API limits.
 
-To run this application, please make sure you have Python installed. Follow the steps below to set up the necessary environment and dependencies:
+```powershell
+$env:GITHUB_TOKEN="your_token_here"
+```
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-username/github-repository-search-app.git
-    cd github-repository-search-app
-    ```
+## Run
 
-2. Install the required packages:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3. Change the location of the chrome driver.
+```bash
+streamlit run main.py
+```
 
-## Usage
+## Test
 
-1. Start the Streamlit application in the terminal:
-    ```bash
-    streamlit run main.py
-    ```
+```bash
+python -m pytest -q
+```
 
-2. Open your web browser and go to localhost displayed in the terminal
+## Notes
 
-3. Enter the topic you want to search for in the input box and click the "Submit" button.
-
-4. The application will display the top 10 GitHub repositories related to your topic, along with their names, links, and README descriptions.
-
-## Files
-
-- `app.py`: The main application script.
-- `requirements.txt`: A list of Python packages required to run the application.
-
-## Dependencies
-
-- Streamlit
-- Selenium
-
-## Acknowledgements
-
-- [Streamlit](https://streamlit.io/)
-- [Selenium](https://www.selenium.dev/)
-- [GitHub](https://github.com/)
-
----
-
-Feel free to reach out if you have any questions or need further assistance!
-
+- The app does not scrape GitHub web pages.
+- API results are cached in Streamlit to reduce repeated requests.
+- README previews are loaded only when a user chooses to analyze a repository.
+- If strict filters return no repositories, EzzySearch offers relaxed name matches.
+- Full repository content remains on GitHub; EzzySearch links back to original repositories.
